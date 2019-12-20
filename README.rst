@@ -10,7 +10,7 @@ arguments.
 
 Install with:
 
-::
+.. code:: bash
 
    pip install ezflags
 
@@ -22,13 +22,40 @@ Here’s a simple example:
    import ezflags
 
    parser = ezflags.FlagParser()
-   parser.add_flag('--flag', '-f', boolean=True, help="A demo flag.")
+   parser.add_flag('--flag', '-f', action=True, help="A demo flag.")
 
    flags = parser.parse_flags()
    print(flags.flag)
 
-And can be invoked as such:
+To integrate with ArgumentParser:
+
+.. code:: py
+
+   import ezflags
+
+   parser = ezflags.FlagParser()
+   parser.add_flag('--flag', '-f', action=True, help="A demo flag.")
+   parser.add_argument('--arg', '-a', help="A demo argument.")
+
+   args = parser.parse_args() # Flags are included, too!
+   print(args.flag)
+   print(args.arg)
+
+This can be invoked as such:
 
 .. code:: bash
 
    python main.py --flag
+   # With ArgumentParser()
+   python main.py --flag --arg arg
+
+Supports
+--------
+
+Supports Python 3.2 and up.
+
+##License
+
+MIT license. See the
+`LICENSE <https://github.com/karx1/ezflags/blob/master/LICENSE>`__ file
+for more details.
