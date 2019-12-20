@@ -54,7 +54,8 @@ Supports
 
 Supports Python 3.2 and up.
 
-##License
+License
+-------
 
 MIT license. See the
 `LICENSE <https://github.com/karx1/ezflags/blob/master/LICENSE>`__ file
