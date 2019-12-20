@@ -10,9 +10,8 @@ def _parse_bool(inp: bool):
 
 class FlagParser(argparse.ArgumentParser):
 
-    def add_flag(self, *args: str, boolean: bool, help: str = None):
-        boolean = _parse_bool(boolean)
-        action_str = f'store_{boolean}'
+    def add_flag(self, *args: str, action: bool, help: str = None):
+        action_str = f'store_{_parse_bool(action)}'
         self.add_argument(*args, action=action_str, help=help)
     
     def parse_flags(self):

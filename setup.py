@@ -1,5 +1,4 @@
 from setuptools import setup
-import re
 import ezflags
 
 readme = ''
