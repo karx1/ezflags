@@ -1,0 +1,7 @@
+build
+dist
+ezflags.egg-info
+.idea
+.venv
+*.md
+ezflags/__pycache__/
