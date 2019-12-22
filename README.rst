@@ -51,7 +51,7 @@ To integrate with ArgumentParser:
 
 This can be invoked as such:
 
-.. code:: py
+.. code:: bash
 
    python main.py --flag
    # With ArgumentParser()
