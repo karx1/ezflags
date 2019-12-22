@@ -1,6 +1,14 @@
 ezflags
 =======
 
+.. image:: https://badge.fury.io/py/ezflags.svg
+    :target: https://badge.fury.io/py/ezflags
+    :alt: PyPI package
+.. image:: https://readthedocs.org/projects/ezflags/badge/?version=latest
+	:target: https://ezflags.readthedocs.io/en/latest/?badge=latest
+	:alt: Documentation Status
+
+
 A tool that makes creating command line flags super easy.
 
 Built on `argparse <https://docs.python.org/3/library/argparse.html>`__,
@@ -43,11 +51,14 @@ To integrate with ArgumentParser:
 
 This can be invoked as such:
 
-.. code:: bash
+.. code:: py
 
    python main.py --flag
    # With ArgumentParser()
    python main.py --flag --arg arg
+
+View the full documentation
+`here <https://ezflags.readthedocs.io/en/latest/>`__.
 
 Supports
 --------
@@ -60,3 +71,8 @@ License
 MIT license. See the
 `LICENSE <https://github.com/karx1/ezflags/blob/master/LICENSE>`__ file
 for more details.
+
+.. |PyPI version| image:: https://badge.fury.io/py/ezflags.svg
+   :target: https://badge.fury.io/py/ezflags
+.. |Documentation Status| image:: https://readthedocs.org/projects/ezflags/badge/?version=latest
+   :target: https://ezflags.readthedocs.io/en/latest/?badge=latest
