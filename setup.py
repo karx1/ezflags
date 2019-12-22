@@ -17,6 +17,9 @@ setup(
     version=ezflags.__version__,
     packages=["ezflags"],
     url="https://github.com/karx1/ezflags",
+    project_urls={
+        "Documentation": "https://ezflags.readthedocs.io/en/latest"
+    },
     license="MIT",
     author="karx",
     author_email="nerdstep710@gmail.com",
