@@ -27,6 +27,8 @@ setup(
     long_description=readme,
     python_requires=">=3.2",
     extras_require=extras_require,
+    test_suite='nose.collector',
+    tests_require=['nose'],
     classifiers=[
         "License :: OSI Approved :: MIT License",
         "Intended Audience :: Developers",
