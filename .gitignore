@@ -5,3 +5,4 @@ ezflags.egg-info
 .venv
 *.md
 ezflags/__pycache__/
+ezflags/tests/__pycache__/
