@@ -23,7 +23,7 @@ class FlagParser(argparse.ArgumentParser):
         :param help: The help message to display when invoked with -h or --help.
         :type help: str, optional
         """
-        action_str = f"store_{_parse_bool(action)}"
+        action_str = "store_{}".format(_parse_bool(action))
         self.add_argument(*args, action=action_str, help=help)
 
     def parse_flags(self):
