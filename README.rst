@@ -1,6 +1,8 @@
 ezflags
 =======
 
+.. image:: https://travis-ci.com/karx1/ezflags.svg?branch=master
+    :target: https://travis-ci.com/karx1/ezflags
 .. image:: https://badge.fury.io/py/ezflags.svg
     :target: https://badge.fury.io/py/ezflags
     :alt: PyPI package
