@@ -32,7 +32,7 @@ Here’s a simple example:
    import ezflags
 
    parser = ezflags.FlagParser()
-   parser.add_flag('--flag', '-f', action=True, help="A demo flag.")
+   parser.add_flag('--flag', '-f', value=True, help="A demo flag.")
 
    flags = parser.parse_flags()
    print(flags.flag)
@@ -44,7 +44,7 @@ To integrate with ArgumentParser:
    import ezflags
 
    parser = ezflags.FlagParser()
-   parser.add_flag('--flag', '-f', action=True, help="A demo flag.")
+   parser.add_flag('--flag', '-f', value=True, help="A demo flag.")
    parser.add_argument('--arg', '-a', help="A demo argument.")
 
    args = parser.parse_args() # Flags are included, too!
