@@ -28,12 +28,11 @@ class FlagParser(argparse.ArgumentParser):
         self.add_argument(*args, action=action_str, help=help)
 
     def parse_flags(self, flag_list=None):
-        flag_list = flag_list or sys.argv[1:]
-        """
-        Parse the flag inputs. Returns an :class:`argparse.Namespace` object with each flag.
+        """Parse the flag inputs. Returns an :class:`argparse.Namespace` object with each flag.
         
         :param flag_list: List of flags to parse. This can be used for testing. Defaults to :class:`sys.argv[1:]`.
         :type flag_list: list, optional
         """
+        flag_list = flag_list or sys.argv[1:]
         args = self.parse_args(flag_list)
         return args
