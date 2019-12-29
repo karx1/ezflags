@@ -11,4 +11,5 @@ Welcome to ezflags's documentation!
    :caption: Contents:
 
    modules
+   changelog
 
