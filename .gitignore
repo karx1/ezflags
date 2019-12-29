@@ -6,3 +6,5 @@ ezflags.egg-info
 *.md
 ezflags/__pycache__/
 ezflags/tests/__pycache__/
+.mypy_cache
+*/.mypy_cache
