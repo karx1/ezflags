@@ -32,6 +32,8 @@ class FlagParser(argparse.ArgumentParser):
         
         :param flag_list: List of flags to parse. This can be used for testing. Defaults to :class:`sys.argv[1:]`.
         :type flag_list: list, optional
+        :return: Returns an object containing the values of all the flags.
+        :rtype: Instance of :class:`argparse.Namespace`
         """
         flag_list = flag_list or sys.argv[1:]
         args = self.parse_args(flag_list)
