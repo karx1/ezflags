@@ -65,7 +65,7 @@ View the full documentation
 Supports
 --------
 
-Supports Python 3.2 and up.
+Supports Python 3.6 and up.
 
 License
 -------
