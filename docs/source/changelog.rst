@@ -3,6 +3,15 @@ Changelog
 
 This is a detailed rendering of what changed in each version.
 
+.. _vp1p2p1:
+
+v1.2.1
+-------
+ - Add a kwarg to specify whether the flag is required or not
+ - Limit to two flag names
+ - Improved type checking
+ - Take info from README and add it to index of documentation
+
 .. _vp1p2p0:
 
 v1.2.0
