@@ -1,0 +1,5 @@
+name: Publish package to PyPi
+uses: pypa/gh-action-pypi-publish@master
+with:
+        user: ${{ secrets.pypi_username }}
+        password: ${{ secrets.pypi_password }}
