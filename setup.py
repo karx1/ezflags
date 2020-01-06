@@ -18,7 +18,7 @@ setup(
     author_email="nerdstep710@gmail.com",
     description="A tool that makes creating command line flags super easy.",
     long_description=readme,
-    python_requires=">=3.2",
+    python_requires=">=3.6",
     extras_require=extras_require,
     test_suite="nose.collector",
     tests_require=["nose"],
