@@ -8,7 +8,10 @@ class FlagParser(argparse.ArgumentParser):
     This is the main class for parsing flags.
     It extends :class:`argparse.ArgumentParser`, and uses the same parameters for __init__.
     """
-    def add_flag(self, *args: str, value: bool, help: str = None, required: bool = False):
+
+    def add_flag(
+        self, *args: str, value: bool, help: str = None, required: bool = False
+    ):
         """Add a flag to the parser.
 
         :param args: Things to name the flag. Maximum of two values.
