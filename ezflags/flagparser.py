@@ -3,19 +3,15 @@ import sys
 from typing import List
 
 
-def _parse_bool(inp: bool):
-    if inp:
-        return "true"
-    else:
-        return "false"
-
-
 class FlagParser(argparse.ArgumentParser):
     """
     This is the main class for parsing flags.
     It extends :class:`argparse.ArgumentParser`, and uses the same parameters for __init__.
     """
-    def add_flag(self, *args: str, value: bool, help: str = None, required: bool = False):
+
+    def add_flag(
+        self, *args: str, value: bool, help: str = None, required: bool = False
+    ):
         """Add a flag to the parser.
 
         :param args: Things to name the flag. Maximum of two values.
@@ -28,7 +24,8 @@ class FlagParser(argparse.ArgumentParser):
         :type help: str, optional
         """
         args = args[:2]
-        action_str = "store_{}".format(_parse_bool(value))
+        result = "true" if value else "false"
+        action_str = f"store_{result}"
         self.add_argument(*args, action=action_str, help=help, required=required)
 
     def parse_flags(self, flag_list: List[str] = None) -> argparse.Namespace:
