@@ -28,6 +28,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
+
 class FlagParser(argparse.ArgumentParser):
     """
     This is the main class for parsing flags.
