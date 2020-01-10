@@ -58,4 +58,4 @@ class TestFlag(TestCase):
             return True
 
         print("Test failed")
-        return False
+        return False 
