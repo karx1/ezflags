@@ -3,6 +3,13 @@ Changelog
 
 This is a detailed rendering of what changed in each version.
 
+.. _vp1p3p0:
+
+v1.3.0
+-------
+ - You can now see a list of all the flags in the parser using `parser.flags`
+ - Performance improvements
+
 .. _vp1p2p1:
 
 v1.2.1

@@ -45,10 +45,18 @@ class FlagParser(argparse.ArgumentParser):
     """
     This is the main class for parsing flags.
     It extends :class:`argparse.ArgumentParser`, and uses the same parameters for __init__.
+
+    :param program_name: The name of the program. Defaults to :class:`sys.argv[0]`
+    :type program_name: str, optional
+    :param description: The message to display before the arguments.
+    :type description: str, optional
+    :param epilogue: The message to display at the end of the help message
+    :type epilogue: str, optional
+    :param prefix_chars: The prefix of each argument. Defaults to '-'
+    :type prefix_chars: str, optional
     """
 
-    def __init__(self, program_name: str = None, description: str = None, epilogue: str = None,
-                 prefix_chars: str = None):
+    def __init__(self, program_name: str = None, description: str = None, epilogue: str = None, prefix_chars: str = None):
         program_name = program_name or sys.argv[0]
         prefix_chars = prefix_chars or "-"
         self.flags = []
