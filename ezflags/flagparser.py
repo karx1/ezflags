@@ -4,6 +4,7 @@ import argparse
 import sys
 from typing import List
 
+
 # MIT License
 #
 # Copyright (c) 2019-2020 karx1
@@ -27,14 +28,34 @@ from typing import List
 # SOFTWARE.
 
 
+def _string_max(string_one: str, string_two: str):
+    length1 = 0
+    length2 = 0
+    for i in string_one:
+        length1 += 1
+    for i in string_two:
+        length2 += 1
+    if length1 > length2:
+        return string_one
+    else:
+        return string_two
+
+
 class FlagParser(argparse.ArgumentParser):
     """
     This is the main class for parsing flags.
     It extends :class:`argparse.ArgumentParser`, and uses the same parameters for __init__.
     """
 
+    def __init__(self, program_name: str = None, description: str = None, epilogue: str = None,
+                 prefix_chars: str = None):
+        program_name = program_name or sys.argv[0]
+        prefix_chars = prefix_chars or "-"
+        self.flags = []
+        super().__init__(prog=program_name, description=description, epilog=epilogue, prefix_chars=prefix_chars)
+
     def add_flag(
-        self, *args: str, value: bool, help: str = None, required: bool = False
+            self, *args: str, value: bool, help: str = None, required: bool = False
     ):
         """Add a flag to the parser.
 
@@ -50,11 +71,14 @@ class FlagParser(argparse.ArgumentParser):
         args = args[:2]
         result = "true" if value else "false"
         action_str = f"store_{result}"
+        string_one = args[0]
+        string_two = args[1]
+        self.flags.append(_string_max(string_one, string_two))
         self.add_argument(*args, action=action_str, help=help, required=required)
 
     def parse_flags(self, flag_list: List[str] = None) -> argparse.Namespace:
         """Parse the flag inputs. Returns an :class:`argparse.Namespace` object with each flag.
-        
+
         :param flag_list: List of flags to parse. This can be used for testing. Defaults to :class:`sys.argv[1:]`.
         :type flag_list: list, optional
         :return: Returns an object containing the values of all the flags.
