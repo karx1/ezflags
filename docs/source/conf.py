@@ -36,9 +36,13 @@
 #
 import os
 import sys
+import re
 
 sys.path.insert(0, os.path.abspath("../.."))
 
+
+with open('../../ezflags/__init__.py') as f:
+    version = re.search(r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]', f.read(), re.MULTILINE).group(1)
 
 # -- Project information -----------------------------------------------------
 
@@ -47,7 +51,7 @@ copyright = "2019-2020, karx"
 author = "karx"
 
 # The full version, including alpha/beta/rc tags
-release = "1.3.1"
+release = str(version)
 # -- General configuration ---------------------------------------------------
 
 # Add any Sphinx extension module names here, as strings. They can be
