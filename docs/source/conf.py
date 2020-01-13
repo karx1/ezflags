@@ -43,13 +43,11 @@ sys.path.insert(0, os.path.abspath("../.."))
 # -- Project information -----------------------------------------------------
 
 project = "ezflags"
-copyright = "2019, karx"
+copyright = "2019-2020, karx"
 author = "karx"
 
 # The full version, including alpha/beta/rc tags
-release = "1.1.2"
-
-
+release = "1.3.1"
 # -- General configuration ---------------------------------------------------
 
 # Add any Sphinx extension module names here, as strings. They can be
@@ -64,7 +62,6 @@ templates_path = ["_templates"]
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = []
-
 
 # -- Options for HTML output -------------------------------------------------
 
