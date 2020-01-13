@@ -3,6 +3,12 @@ Changelog
 
 This is a detailed rendering of what changed in each version.
 
+.. _vp1p3p1:
+
+v1.3.1
+-------
+ - Add `parser.flags_short`, which contains the short versions of each flag. Each index in `flags_short` corresponds to its longer counterpart in `parser.flags`.
+
 .. _vp1p3p0:
 
 v1.3.0
