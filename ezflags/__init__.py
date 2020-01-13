@@ -22,5 +22,5 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-__version__ = "1.3.0"
+__version__ = "1.3.1"
 from ezflags.flagparser import FlagParser
