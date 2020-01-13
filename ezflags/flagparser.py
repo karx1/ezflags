@@ -41,6 +41,19 @@ def _string_max(string_one: str, string_two: str):
         return string_two
 
 
+def _string_min(string_one: str, string_two: str):
+    length1 = 0
+    length2 = 0
+    for i in string_one:
+        length1 += 1
+    for i in string_two:
+        length2 += 1
+    if length1 < length2:
+        return string_one
+    else:
+        return string_two
+
+
 class FlagParser(argparse.ArgumentParser):
     """
     This is the main class for parsing flags.
@@ -60,6 +73,7 @@ class FlagParser(argparse.ArgumentParser):
         program_name = program_name or sys.argv[0]
         prefix_chars = prefix_chars or "-"
         self.flags = []
+        self.flags_short = []
         super().__init__(prog=program_name, description=description, epilog=epilogue, prefix_chars=prefix_chars)
 
     def add_flag(
@@ -82,6 +96,7 @@ class FlagParser(argparse.ArgumentParser):
         string_one = args[0]
         string_two = args[1]
         self.flags.append(_string_max(string_one, string_two))
+        self.flags_short.append(_string_min(string_one, string_two))
         self.add_argument(*args, action=action_str, help=help, required=required)
 
     def parse_flags(self, flag_list: List[str] = None) -> argparse.Namespace:
