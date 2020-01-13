@@ -106,6 +106,7 @@ class FlagParser(argparse.ArgumentParser):
 
     def parse_flags(self, flag_list: List[str] = None) -> argparse.Namespace:
         """Parse the flag inputs. Returns an :class:`argparse.Namespace` object with each flag.
+        See :ref:`parsing` for more info.
 
         :param flag_list: List of flags to parse. This can be used for testing. Defaults to :class:`sys.argv[1:]`.
         :type flag_list: list, optional
