@@ -11,6 +11,7 @@ Welcome to ezflags's documentation!
    :caption: Contents:
 
    modules
+   parsing
    changelog
 
 `ezflags` is a tool that makes creating command line flags super easy.
