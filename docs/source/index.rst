@@ -10,8 +10,9 @@ Welcome to ezflags's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-   modules
+   install
    parsing
+   ezflags
    changelog
 
 `ezflags` is a tool that makes creating command line flags super easy.
