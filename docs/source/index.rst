@@ -10,6 +10,7 @@ Welcome to ezflags's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   install
    modules
    parsing
    changelog
