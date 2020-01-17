@@ -101,7 +101,8 @@ class FlagParser(argparse.ArgumentParser):
         :param help: A brief description of the flag. These descriptions will be displayed when the `-h` or `--help` flags are present.
         :type help: str, optional
         """
-        assert len(args) > 0
+        if len(args) < 0:
+            raise ValueError("Must provide at least one flag")
         args = args[:2]
         result = "true" if value else "false"
         action_str = f"store_{result}"
