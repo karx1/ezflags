@@ -41,6 +41,11 @@ def _string_max(string_one: str, string_two: str):
         return string_two
 
 
+def _add_to_dict(obj, key_string: str, value):
+    obj[key_string] = value
+    return dict
+
+
 def _string_min(string_one: str, string_two: str):
     length1 = 0
     length2 = 0
@@ -77,8 +82,7 @@ class FlagParser(argparse.ArgumentParser):
     def __init__(self, program_name: str = None, description: str = None, epilogue: str = None, prefix_chars: str = None):
         program_name = program_name or sys.argv[0]
         prefix_chars = prefix_chars or "-"
-        self.flags = []
-        self.flags_short = []
+        self.flags = {}
         super().__init__(prog=program_name, description=description, epilog=epilogue, prefix_chars=prefix_chars)
 
     def add_flag(
@@ -95,13 +99,24 @@ class FlagParser(argparse.ArgumentParser):
         :param help: A brief description of the flag. These descriptions will be displayed when the `-h` or `--help` flags are present.
         :type help: str, optional
         """
+        assert len(args) > 0
         args = args[:2]
         result = "true" if value else "false"
         action_str = f"store_{result}"
         string_one = args[0]
-        string_two = args[1]
-        self.flags.append(_string_max(string_one, string_two))
-        self.flags_short.append(_string_min(string_one, string_two))
+        try:
+            string_two = args[1]
+        except IndexError:
+            string_two = None
+
+        if string_two:
+            string_one_new = _string_max(string_one, string_two)
+            string_two_new = _string_min(string_one, string_two)
+            key_string = f"{string_one_new}, {string_two_new}"
+            self.flags[key_string] = value
+        else:
+            key_string = f"{string_one}"
+            self.flags[key_string] = value
         self.add_argument(*args, action=action_str, help=help, required=required)
 
     def parse_flags(self, flag_list: List[str] = None) -> argparse.Namespace:
