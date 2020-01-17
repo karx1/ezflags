@@ -44,6 +44,8 @@ sys.path.insert(0, os.path.abspath("../.."))
 with open('../../ezflags/__init__.py') as f:
     version = re.search(r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]', f.read(), re.MULTILINE).group(1)
 
+rst_epilog = ".. |ProjectVersion| replace:: {}".format(version)
+
 # -- Project information -----------------------------------------------------
 
 project = "ezflags"
@@ -53,6 +55,7 @@ author = "karx"
 # The full version, including alpha/beta/rc tags
 release = str(version)
 # -- General configuration ---------------------------------------------------
+
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom

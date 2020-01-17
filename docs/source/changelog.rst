@@ -3,6 +3,13 @@ Changelog
 
 This is a detailed rendering of what changed in each version.
 
+.. _vp1p3p2:
+
+v1.3.2
+-------
+ - Change `parser.flags` to a dictionary with the flag names (and short versions, if applicable) corresponding to their value.
+ - Fix bug where an error was raised when providing only one flag name
+
 .. _vp1p3p1:
 
 v1.3.1
