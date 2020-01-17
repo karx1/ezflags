@@ -74,9 +74,11 @@ class FlagParser(argparse.ArgumentParser):
     :type prefix_chars: str, optional
 
     flags
-        A list of flags added to the parser
-    flags_short
-        Same as `flags`, but contains the short versions of each flag.
+        A dictionary of flags and their values.
+        For example:\n
+        .. code:: py
+
+            {"--flag, -f": True}
     """
 
     def __init__(self, program_name: str = None, description: str = None, epilogue: str = None, prefix_chars: str = None):
