@@ -57,11 +57,22 @@ class TestFlag(TestCase):
             return True
 
         print("Test failed")
-        return False 
+        return False
+
+    def test_flag_error(self):
+        parser = create_parser()
+        parser.add_flag("--flag", value=True)
+        try:
+            parser.parse_flags(["--test", "flag"])
+        except Exception:
+            print("Test passed!")
+            return True
+
+        print("Test failed")
+        return False
 
     def test_flag_list(self):
         parser = create_parser()
         parser.add_flag("--list", "-l", value=True)
         self.assertIn("--list, -l", parser.flags)
         print("Test passed!")
-
