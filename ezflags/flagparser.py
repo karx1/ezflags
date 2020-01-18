@@ -29,34 +29,11 @@ from typing import List
 
 
 def _string_max(string_one: str, string_two: str):
-    length1 = 0
-    length2 = 0
-    for i in string_one:
-        length1 += 1
-    for i in string_two:
-        length2 += 1
-    if length1 > length2:
-        return string_one
-    else:
-        return string_two
-
-
-def _add_to_dict(obj, key_string: str, value):
-    obj[key_string] = value
-    return dict
+    return string_one if len(string_one) > len(string_two) else string_two
 
 
 def _string_min(string_one: str, string_two: str):
-    length1 = 0
-    length2 = 0
-    for i in string_one:
-        length1 += 1
-    for i in string_two:
-        length2 += 1
-    if length1 < length2:
-        return string_one
-    else:
-        return string_two
+    return string_one if len(string_one) < len(string_two) else string_two
 
 
 class FlagParser(argparse.ArgumentParser):
@@ -113,9 +90,7 @@ class FlagParser(argparse.ArgumentParser):
             string_two = None
 
         if string_two:
-            string_one_new = _string_max(string_one, string_two)
-            string_two_new = _string_min(string_one, string_two)
-            key_string = f"{string_one_new}, {string_two_new}"
+            key_string = f"{_string_max(string_one, string_two)}, {_string_min(string_one, string_two)}"
             self.flags[key_string] = value
         else:
             key_string = f"{string_one}"
