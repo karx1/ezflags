@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from unittest import TestCase
-
 import ezflags
 
 
@@ -57,11 +56,28 @@ class TestFlag(TestCase):
             return True
 
         print("Test failed")
-        return False 
+        return False
+
+    def test_flag_error(self):
+        parser = create_parser()
+        parser.add_flag("--flag", value=True)
+        try:
+            parser.parse_flags(["--test", "flag"])
+        except:
+            print("Test passed!")
+            return True
+
+        print("Test failed")
+        return False
+
+    def test_interaction(self):
+        parser = create_parser()
+        parser.add_argument("--arg", type=str)
+        args = parser.parse_args(["--true", "--arg", "test"])
+        self.assertEqual("test", args.arg)
 
     def test_flag_list(self):
         parser = create_parser()
         parser.add_flag("--list", "-l", value=True)
         self.assertIn("--list, -l", parser.flags)
         print("Test passed!")
-
