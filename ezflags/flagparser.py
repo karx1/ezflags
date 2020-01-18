@@ -39,7 +39,7 @@ def _string_min(string_one: str, string_two: str):
 class FlagParser(argparse.ArgumentParser):
     """
     This is the main class for parsing flags.
-    It extends :class:`argparse.ArgumentParser`, and uses the same parameters for __init__.
+    It extends :class:`argparse.ArgumentParser`.
 
     :param program_name: The name of the program. Defaults to :class:`sys.argv[0]`
     :type program_name: str, optional
