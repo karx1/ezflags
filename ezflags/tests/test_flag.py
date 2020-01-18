@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from unittest import TestCase
-
 import ezflags
 
 
@@ -64,7 +63,7 @@ class TestFlag(TestCase):
         parser.add_flag("--flag", value=True)
         try:
             parser.parse_flags(["--test", "flag"])
-        except Exception:
+        except:
             print("Test passed!")
             return True
 
