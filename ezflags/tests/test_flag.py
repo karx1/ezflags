@@ -70,6 +70,12 @@ class TestFlag(TestCase):
         print("Test failed")
         return False
 
+    def test_interaction(self):
+        parser = create_parser()
+        parser.add_argument("--arg", type=str)
+        args = parser.parse_args(["--true", "--arg", "test"])
+        self.assertEqual("test", args.arg)
+
     def test_flag_list(self):
         parser = create_parser()
         parser.add_flag("--list", "-l", value=True)
