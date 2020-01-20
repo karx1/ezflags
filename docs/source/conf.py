@@ -41,8 +41,10 @@ import re
 sys.path.insert(0, os.path.abspath("../.."))
 
 
-with open('../../ezflags/__init__.py') as f:
-    version = re.search(r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]', f.read(), re.MULTILINE).group(1)
+with open("../../ezflags/__init__.py") as f:
+    version = re.search(
+        r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]', f.read(), re.MULTILINE
+    ).group(1)
 
 rst_epilog = ".. |ProjectVersion| replace:: {}".format(version)
 
