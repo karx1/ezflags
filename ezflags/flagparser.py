@@ -3,6 +3,8 @@
 import argparse
 import sys
 from typing import List
+import time
+import datetime
 
 
 # MIT License
@@ -36,6 +38,12 @@ def _string_min(string_one: str, string_two: str):
     return string_one if len(string_one) < len(string_two) else string_two
 
 
+def _parse_current_time():
+    ts = time.time()
+    st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S:%f')
+    return st
+
+
 class FlagParser(argparse.ArgumentParser):
     """
     This is the main class for parsing flags.
@@ -58,11 +66,21 @@ class FlagParser(argparse.ArgumentParser):
             {"--flag, -f": True}
     """
 
-    def __init__(self, program_name: str = None, description: str = None, epilogue: str = None, prefix_chars: str = None):
+    def __init__(self, program_name: str = None, description: str = None, epilogue: str = None, prefix_chars: str = None, debug: bool = False, debug_file=None):
         program_name = program_name or sys.argv[0]
         prefix_chars = prefix_chars or "-"
+        debug_file = debug_file or sys.stdout
         self.flags = {}
+        self.debug = debug
+        self.debug_file = debug_file
         super().__init__(prog=program_name, description=description, epilog=epilogue, prefix_chars=prefix_chars)
+        self._log("Parser initialized")
+
+    def _log(self, string, file=None):
+        file = file or self.debug_file
+        string = f"{_parse_current_time()} - {string}"
+        if self.debug:
+            print(string, file=file)
 
     def add_flag(
             self, *args: str, value: bool, help: str = None, required: bool = False
@@ -81,6 +99,7 @@ class FlagParser(argparse.ArgumentParser):
         if len(args) < 0:
             raise ValueError("Must provide at least one flag")
         args = args[:2]
+        self._log("Processing values")
         result = "true" if value else "false"
         action_str = f"store_{result}"
         string_one = args[0]
@@ -92,10 +111,13 @@ class FlagParser(argparse.ArgumentParser):
         if string_two:
             key_string = f"{_string_max(string_one, string_two)}, {_string_min(string_one, string_two)}"
             self.flags[key_string] = value
+            self._log(f"Added \"{key_string}\" to flag list")
         else:
             key_string = f"{string_one}"
             self.flags[key_string] = value
+            self._log(f"Added \"{key_string}\" to flag list")
         self.add_argument(*args, action=action_str, help=help, required=required)
+        self._log("Created flag")
 
     def parse_flags(self, flag_list: List[str] = None) -> argparse.Namespace:
         """Parse the flag inputs. Returns an :class:`argparse.Namespace` object with each flag.
@@ -106,6 +128,9 @@ class FlagParser(argparse.ArgumentParser):
         :return: Returns an object containing the values of all the flags.
         :rtype: Instance of :class:`argparse.Namespace`
         """
+        self._log("Processing flag list")
         flag_list = flag_list or sys.argv[1:]
+        self._log("Parsing flags")
         args = self.parse_args(flag_list)
+        self._log("Cleaning up")
         return args
