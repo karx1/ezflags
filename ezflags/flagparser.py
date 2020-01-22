@@ -40,7 +40,7 @@ def _string_min(string_one: str, string_two: str):
 
 def _parse_current_time():
     ts = time.time()
-    st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S:%f')
+    st = datetime.datetime.fromtimestamp(ts).strftime("%Y-%m-%d %H:%M:%S:%f")
     return st
 
 
@@ -57,6 +57,10 @@ class FlagParser(argparse.ArgumentParser):
     :type epilogue: str, optional
     :param prefix_chars: The prefix of each argument. Defaults to '-'
     :type prefix_chars: str, optional
+    :param debug: Turns on or off debug mode. Defaults to false.
+    :type debug: bool, optional
+    :param debug_file: The file to write to in debug mode. Needs to be a file object as returned by :class:`open`. Defaults to :class`sys.stdout`.
+    :type debug_file: file, optional
 
     flags
         A dictionary of flags and their values.
@@ -66,14 +70,27 @@ class FlagParser(argparse.ArgumentParser):
             {"--flag, -f": True}
     """
 
-    def __init__(self, program_name: str = None, description: str = None, epilogue: str = None, prefix_chars: str = None, debug: bool = False, debug_file=None):
+    def __init__(
+        self,
+        program_name: str = None,
+        description: str = None,
+        epilogue: str = None,
+        prefix_chars: str = None,
+        debug: bool = False,
+        debug_file=None,
+    ):
         program_name = program_name or sys.argv[0]
         prefix_chars = prefix_chars or "-"
         debug_file = debug_file or sys.stdout
         self.flags = {}
         self.debug = debug
         self.debug_file = debug_file
-        super().__init__(prog=program_name, description=description, epilog=epilogue, prefix_chars=prefix_chars)
+        super().__init__(
+            prog=program_name,
+            description=description,
+            epilog=epilogue,
+            prefix_chars=prefix_chars,
+        )
         self._log("Parser initialized")
 
     def _log(self, string, file=None):
@@ -83,7 +100,7 @@ class FlagParser(argparse.ArgumentParser):
             print(string, file=file)
 
     def add_flag(
-            self, *args: str, value: bool, help: str = None, required: bool = False
+        self, *args: str, value: bool, help: str = None, required: bool = False
     ):
         """Add a flag to the parser.
 
@@ -111,11 +128,11 @@ class FlagParser(argparse.ArgumentParser):
         if string_two:
             key_string = f"{_string_max(string_one, string_two)}, {_string_min(string_one, string_two)}"
             self.flags[key_string] = value
-            self._log(f"Added \"{key_string}\" to flag list")
+            self._log(f'Added "{key_string}" to flag list')
         else:
             key_string = f"{string_one}"
             self.flags[key_string] = value
-            self._log(f"Added \"{key_string}\" to flag list")
+            self._log(f'Added "{key_string}" to flag list')
         self.add_argument(*args, action=action_str, help=help, required=required)
         self._log("Created flag")
 
