@@ -57,6 +57,10 @@ class FlagParser(argparse.ArgumentParser):
     :type epilogue: str, optional
     :param prefix_chars: The prefix of each argument. Defaults to '-'
     :type prefix_chars: str, optional
+    :param debug: Turns on or off debug mode. Defaults to false.
+    :type debug: bool, optional
+    :param debug_file: The file to write to in debug mode. Needs to be a file object as returned by :class:`open`. Defaults to :class`sys.stdout`.
+    :type debug_file: file, optional
 
     flags
         A dictionary of flags and their values.
