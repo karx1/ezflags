@@ -3,6 +3,17 @@ Changelog
 
 This is a detailed rendering of what changed in each version.
 
+.. _vp1p3p3:
+
+v1.3.3
+-------
+ - Add debug mode. This prints various messages about what the parser is currently doing. You can specify the file it writes to like this:
+ 
+.. code:: py
+
+	file = open("somefile.txt", "w")
+	parser = ezflags.FlagParser(debug=True, debug_file=file)
+
 .. _vp1p3p2:
 
 v1.3.2
