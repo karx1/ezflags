@@ -23,4 +23,4 @@
 # SOFTWARE.
 
 __version__ = "1.3.3"
-from ezflags.flagparser import FlagParser
+from ezflags.flagparser import FlagParser, FlagParserExtended
