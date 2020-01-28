@@ -44,7 +44,117 @@ def _parse_current_time():
     return st
 
 
-class FlagParser(argparse.ArgumentParser):
+class FlagParser:
+    def __init__(
+        self,
+        program_name: str = None,
+        description: str = None,
+        epilogue: str = None,
+        prefix_chars: str = None,
+        debug: bool = False,
+        debug_file=None,
+    ):
+        program_name = program_name or sys.argv[0]
+        prefix_chars = prefix_chars or "-"
+        debug_file = debug_file or sys.stdout
+        self.program_name = program_name
+        self.prefix_chars = prefix_chars
+        self.description = description
+        self.epilogue = epilogue
+        self.debug = debug
+        self.debug_file = debug_file
+        self.flags = {}
+        self._added_flags = {}
+        self._help_messages = ["--help, -h - Show this help message and exit"]
+        self._flag_pairs = {}
+
+    def add_flag(self, *args: str, value: bool, help: str = None):
+        if len(args) < 0:
+            raise ValueError("Must provide at least one flag")
+        args = args[:2]
+        string_one = args[0]
+        try:
+            string_two = args[1]
+        except IndexError:
+            string_two = None
+
+        if string_two:
+            bigger_string = _string_max(string_one, string_two)
+            smaller_string = _string_min(string_one, string_two)
+            key_string = f"{bigger_string}, {smaller_string}"
+            help_string = f"{key_string} - {help}"
+            self.flags[key_string] = value
+            self._added_flags[bigger_string] = value
+            self._added_flags[smaller_string] = value
+            self._help_messages.append(help_string)
+            self._flag_pairs[bigger_string] = smaller_string
+        else:
+            key_string = string_one
+            self.flags[key_string] = value
+            self._added_flags[string_one] = value
+
+    def parse_flags(self, flag_list: List[str] = None):
+        flag_list = flag_list or sys.argv[1:]
+        formatter = _HelpFormatter(
+            self._help_messages,
+            self.program_name,
+            description=self.description,
+            epilogue=self.epilogue,
+        )
+        help_string = formatter.format()
+        if "--help" in flag_list or "-h" in flag_list:
+            print(help_string)
+            sys.exit()
+        parsed = _ParsedObj()
+        for key, value in self._added_flags.items():
+            stripped_flag = key.replace("-", "")
+            flipped_bool = not value
+            setattr(parsed, stripped_flag, flipped_bool)
+        for flag in flag_list:
+            if flag in self._added_flags:
+                stripped_flag = flag.replace("-", "")
+                values = self._flag_pairs.values()
+                if flag in values:
+                    key = list(self._flag_pairs.keys())[list(self._flag_pairs.values()).index(flag)]
+                    short_version = key.replace("-", "")
+                    setattr(parsed, short_version, self._added_flags[flag])
+                setattr(parsed, stripped_flag, self._added_flags[flag])
+            else:
+                raise ValueError(f"Unrecognized flag: {flag}")
+
+        return parsed
+
+
+class _ParsedObj:
+    help = "--help"
+
+
+class _HelpFormatter:
+    def __init__(
+        self,
+        help_messages: List[str],
+        program_name: str,
+        description: str = None,
+        epilogue: str = None,
+    ):
+        description = description or ""
+        epilogue = epilogue or ""
+        self.description = description
+        self.epilogue = epilogue
+        self.program_name = program_name
+        self.help_messages = help_messages
+
+    def format(self) -> str:
+        formatted_string_opening = (
+            f"{self.description}\nUsage: {self.program_name} [flags]\n\n"
+        )
+        formatted_string_body = "\n".join(self.help_messages)
+        formatted_string_closing = f"\n\n{self.epilogue}"
+        formatted_string_final = f"{formatted_string_opening}{formatted_string_body}{formatted_string_closing}"
+        return formatted_string_final
+
+
+class FlagParserExtended(argparse.ArgumentParser):
     """
     This is the main class for parsing flags.
     It extends :class:`argparse.ArgumentParser`.
