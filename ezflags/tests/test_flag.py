@@ -34,6 +34,13 @@ def create_parser():
     return parser
 
 
+def create_extended_parser():
+    parser = ezflags.FlagParserExtended()
+    parser.add_flag("--true", "-t", value=True)
+    parser.add_flag("--false", "-f", value=False)
+    return parser
+
+
 class TestFlag(TestCase):
     def test_is_true(self):
         parser = create_parser()
@@ -71,7 +78,7 @@ class TestFlag(TestCase):
         return False
 
     def test_interaction(self):
-        parser = create_parser()
+        parser = create_extended_parser()
         parser.add_argument("--arg", type=str)
         args = parser.parse_args(["--true", "--arg", "test"])
         self.assertEqual("test", args.arg)
