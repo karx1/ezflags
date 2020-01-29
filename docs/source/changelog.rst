@@ -3,6 +3,16 @@ Changelog
 
 This is a detailed rendering of what changed in each version.
 
+.. _vp1p4p0:
+
+v1.4.0
+-------
+ - This update is a complete rewrite of the module.
+ - It moves away from using argparse and instead parses flags "in-house".
+ - The new class saves a lot of memory because it now only contains the logic for boolean flags.
+ - The argparse-like parser is still available through the FlagParserExtended class. (This may be moved to another location, so the import will be different.)
+ - The new parser class is still incomplete and may be buggy. Features will be brought back in the next series of incremental updates.
+
 .. _vp1p3p3:
 
 v1.3.3
