@@ -13,8 +13,8 @@ ezflags
 
 A tool that makes creating command line flags super easy.
 
-Built on `argparse <https://docs.python.org/3/library/argparse.html>`__,
-switching is no problem at all! You can even use the FlagParser as if it
+Similar to `argparse <https://docs.python.org/3/library/argparse.html>`__,
+switching is no problem at all! You can even use the FlagParserExtended as if it
 were a normal ArgumentParser for full integration with existing
 arguments.
 
@@ -43,7 +43,7 @@ To integrate with ArgumentParser:
 
    import ezflags
 
-   parser = ezflags.FlagParser()
+   parser = ezflags.FlagParserExtended()
    parser.add_flag('--flag', '-f', value=True, help="A demo flag.")
    parser.add_argument('--arg', '-a', help="A demo argument.")
 

@@ -45,6 +45,29 @@ def _parse_current_time():
 
 
 class FlagParser:
+    """
+    This is the main class for parsing flags.
+
+    :param program_name: The name of the program. Defaults to :class:`sys.argv[0]`
+    :type program_name: str, optional
+    :param description: The message to display before the arguments.
+    :type description: str, optional
+    :param epilogue: The message to display at the end of the help message
+    :type epilogue: str, optional
+    :param prefix_chars: The prefix of each argument. Defaults to '-'
+    :type prefix_chars: str, optional
+    :param debug: Turns on or off debug mode. Defaults to false.
+    :type debug: bool, optional
+    :param debug_file: The file to write to in debug mode. Needs to be a file object as returned by :class:`open`. Defaults to :class`sys.stdout`.
+    :type debug_file: file, optional
+
+    flags
+        A dictionary of flags and their values.
+        For example:\n
+        .. code:: py
+
+            {"--flag, -f": True}
+    """
     def __init__(
         self,
         program_name: str = None,
@@ -69,6 +92,15 @@ class FlagParser:
         self._flag_pairs = {}
 
     def add_flag(self, *args: str, value: bool, help: str = None):
+        """Add a flag to the parser.
+
+        :param args: Things to name the flag. Maximum of two values.
+        :type args: str
+        :param value: The value of the flag when present.
+        :type value: bool
+        :param help: A brief description of the flag. These descriptions will be displayed when the `-h` or `--help` flags are present.
+        :type help: str, optional
+        """
         if len(args) < 0:
             raise ValueError("Must provide at least one flag")
         args = args[:2]
@@ -94,6 +126,14 @@ class FlagParser:
             self._added_flags[string_one] = value
 
     def parse_flags(self, flag_list: List[str] = None):
+        """Parse the flag inputs. Returns an object with the values of each flag.
+        See :ref:`parsing` for more info.
+
+        :param flag_list: List of flags to parse. This can be used for testing. Defaults to :class:`sys.argv[1:]`.
+        :type flag_list: list, optional
+        :return: Returns an object containing the values of all the flags.
+        :rtype: Instance of :class:`argparse.Namespace`
+        """
         flag_list = flag_list or sys.argv[1:]
         formatter = _HelpFormatter(
             self._help_messages,
@@ -156,8 +196,7 @@ class _HelpFormatter:
 
 class FlagParserExtended(argparse.ArgumentParser):
     """
-    This is the main class for parsing flags.
-    It extends :class:`argparse.ArgumentParser`.
+    This is the class for using flags and argparse arguments in conjunction. It uses the same parameters as :class:`FlagParser`.
 
     :param program_name: The name of the program. Defaults to :class:`sys.argv[0]`
     :type program_name: str, optional
@@ -179,7 +218,6 @@ class FlagParserExtended(argparse.ArgumentParser):
 
             {"--flag, -f": True}
     """
-
     def __init__(
         self,
         program_name: str = None,

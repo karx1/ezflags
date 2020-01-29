@@ -7,7 +7,7 @@ Welcome to ezflags |ProjectVersion| documentation!
 ==================================================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    :caption: Contents:
 
    install
@@ -17,8 +17,8 @@ Welcome to ezflags |ProjectVersion| documentation!
 
 `ezflags` is a tool that makes creating command line flags super easy.
 
-Built on `argparse <https://docs.python.org/3/library/argparse.html>`__,
-switching is no problem at all! You can even use the FlagParser as if it
+Similar to `argparse <https://docs.python.org/3/library/argparse.html>`__,
+switching is no problem at all! You can even use the FlagParserExtended class as if it
 were a normal ArgumentParser for full integration with existing
 arguments.
 
