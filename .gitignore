@@ -6,9 +6,9 @@ ezflags.egg-info
 *.md
 ezflags/__pycache__/
 ezflags/tests/__pycache__/
+ezflags/ext/__pycache__/
 .mypy_cache
 */.mypy_cache
 .eggs/
 .coverage
-.venv
 flag.py
