@@ -41,9 +41,9 @@ To integrate with ArgumentParser:
 
 .. code:: py
 
-   import ezflags
+   from ezflags.ext import FlagParserExtended
 
-   parser = ezflags.FlagParserExtended()
+   parser = FlagParserExtended()
    parser.add_flag('--flag', '-f', value=True, help="A demo flag.")
    parser.add_argument('--arg', '-a', help="A demo argument.")
 
