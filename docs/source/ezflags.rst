@@ -8,3 +8,8 @@ ezflags.flagparser module
    :members:
    :undoc-members:
    :show-inheritance:
+
+.. automodule:: ezflags.ext.exflagparser
+   :members:
+   :undoc-members:
+   :show-inheritance:

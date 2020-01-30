@@ -3,6 +3,13 @@ Changelog
 
 This is a detailed rendering of what changed in each version.
 
+.. _vp1p4p1:
+
+v1.4.1
+-------
+ - Move FlagParserExtended to a new location, `ezflags.ext`
+ - Bring back logging
+
 .. _vp1p4p0:
 
 v1.4.0
