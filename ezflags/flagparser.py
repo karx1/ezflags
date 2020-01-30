@@ -90,6 +90,13 @@ class FlagParser:
         self._added_flags = {}
         self._help_messages = ["--help, -h - Show this help message and exit"]
         self._flag_pairs = {}
+        self._log("Parser initialized")
+
+    def _log(self, string, file=None):
+        file = file or self.debug_file
+        string = f"{_parse_current_time()} - {string}"
+        if self.debug:
+            print(string, file=file)
 
     def add_flag(self, *args: str, value: bool, help: str = None):
         """Add a flag to the parser.
@@ -101,6 +108,7 @@ class FlagParser:
         :param help: A brief description of the flag. These descriptions will be displayed when the `-h` or `--help` flags are present.
         :type help: str, optional
         """
+        self._log("Computing values")
         if len(args) < 0:
             raise ValueError("Must provide at least one flag")
         args = args[:2]
@@ -111,6 +119,7 @@ class FlagParser:
             string_two = None
 
         if string_two:
+            self._log("Adding flag")
             bigger_string = _string_max(string_one, string_two)
             smaller_string = _string_min(string_one, string_two)
             key_string = f"{bigger_string}, {smaller_string}"
@@ -121,9 +130,12 @@ class FlagParser:
             self._help_messages.append(help_string)
             self._flag_pairs[bigger_string] = smaller_string
         else:
+            self._log("Adding flag")
             key_string = string_one
             self.flags[key_string] = value
             self._added_flags[string_one] = value
+
+        self._log("Added flag")
 
     def parse_flags(self, flag_list: List[str] = None):
         """Parse the flag inputs. Returns an object with the values of each flag.
@@ -135,6 +147,7 @@ class FlagParser:
         :rtype: Instance of :class:`argparse.Namespace`
         """
         flag_list = flag_list or sys.argv[1:]
+        self._log("Formatting help string")
         formatter = _HelpFormatter(
             self._help_messages,
             self.program_name,
@@ -142,10 +155,12 @@ class FlagParser:
             epilogue=self.epilogue,
         )
         help_string = formatter.format()
+        self._log("Checking for help flag")
         if "--help" in flag_list or "-h" in flag_list:
             print(help_string)
             sys.exit()
         parsed = _ParsedObj()
+        self._log("Adding values to _ParsedObj instance")
         for key, value in self._added_flags.items():
             stripped_flag = key.replace("-", "")
             flipped_bool = not value
@@ -162,6 +177,7 @@ class FlagParser:
             else:
                 raise ValueError(f"Unrecognized flag: {flag}")
 
+        self._log("Done, cleaning up")
         return parsed
 
 
@@ -192,5 +208,3 @@ class _HelpFormatter:
         formatted_string_closing = f"\n\n{self.epilogue}"
         formatted_string_final = f"{formatted_string_opening}{formatted_string_body}{formatted_string_closing}"
         return formatted_string_final
-
-
