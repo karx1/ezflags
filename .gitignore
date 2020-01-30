@@ -10,3 +10,5 @@ ezflags/tests/__pycache__/
 */.mypy_cache
 .eggs/
 .coverage
+.venv
+flag.py

@@ -2,6 +2,7 @@
 
 from unittest import TestCase
 import ezflags
+from ezflags.ext import FlagParserExtended
 
 
 # MIT License
@@ -35,7 +36,7 @@ def create_parser():
 
 
 def create_extended_parser():
-    parser = ezflags.FlagParserExtended()
+    parser = FlagParserExtended()
     parser.add_flag("--true", "-t", value=True)
     parser.add_flag("--false", "-f", value=False)
     return parser

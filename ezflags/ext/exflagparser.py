@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 
-
+import argparse
+import datetime
+import time
 import sys
 from typing import List
-import time
-import datetime
-
 
 # MIT License
 #
@@ -44,9 +43,9 @@ def _parse_current_time():
     return st
 
 
-class FlagParser:
+class FlagParserExtended(argparse.ArgumentParser):
     """
-    This is the main class for parsing flags.
+    This is the class for using flags and argparse arguments in conjunction. It uses the same parameters as :class:`FlagParser`.
 
     :param program_name: The name of the program. Defaults to :class:`sys.argv[0]`
     :type program_name: str, optional
@@ -80,30 +79,43 @@ class FlagParser:
         program_name = program_name or sys.argv[0]
         prefix_chars = prefix_chars or "-"
         debug_file = debug_file or sys.stdout
-        self.program_name = program_name
-        self.prefix_chars = prefix_chars
-        self.description = description
-        self.epilogue = epilogue
+        self.flags = {}
         self.debug = debug
         self.debug_file = debug_file
-        self.flags = {}
-        self._added_flags = {}
-        self._help_messages = ["--help, -h - Show this help message and exit"]
-        self._flag_pairs = {}
+        super().__init__(
+            prog=program_name,
+            description=description,
+            epilog=epilogue,
+            prefix_chars=prefix_chars,
+        )
+        self._log("Parser initialized")
 
-    def add_flag(self, *args: str, value: bool, help: str = None):
+    def _log(self, string, file=None):
+        file = file or self.debug_file
+        string = f"{_parse_current_time()} - {string}"
+        if self.debug:
+            print(string, file=file)
+
+    def add_flag(
+        self, *args: str, value: bool, help: str = None, required: bool = False
+    ):
         """Add a flag to the parser.
 
         :param args: Things to name the flag. Maximum of two values.
         :type args: str
         :param value: The value of the flag when present.
         :type value: bool
+        :param required: Whether the flag is required for the script to run. Defaults to False.
+        :type required: bool, optional
         :param help: A brief description of the flag. These descriptions will be displayed when the `-h` or `--help` flags are present.
         :type help: str, optional
         """
         if len(args) < 0:
             raise ValueError("Must provide at least one flag")
         args = args[:2]
+        self._log("Processing values")
+        result = "true" if value else "false"
+        action_str = f"store_{result}"
         string_one = args[0]
         try:
             string_two = args[1]
@@ -111,22 +123,18 @@ class FlagParser:
             string_two = None
 
         if string_two:
-            bigger_string = _string_max(string_one, string_two)
-            smaller_string = _string_min(string_one, string_two)
-            key_string = f"{bigger_string}, {smaller_string}"
-            help_string = f"{key_string} - {help}"
+            key_string = f"{_string_max(string_one, string_two)}, {_string_min(string_one, string_two)}"
             self.flags[key_string] = value
-            self._added_flags[bigger_string] = value
-            self._added_flags[smaller_string] = value
-            self._help_messages.append(help_string)
-            self._flag_pairs[bigger_string] = smaller_string
+            self._log(f'Added "{key_string}" to flag list')
         else:
-            key_string = string_one
+            key_string = f"{string_one}"
             self.flags[key_string] = value
-            self._added_flags[string_one] = value
+            self._log(f'Added "{key_string}" to flag list')
+        self.add_argument(*args, action=action_str, help=help, required=required)
+        self._log("Created flag")
 
-    def parse_flags(self, flag_list: List[str] = None):
-        """Parse the flag inputs. Returns an object with the values of each flag.
+    def parse_flags(self, flag_list: List[str] = None) -> argparse.Namespace:
+        """Parse the flag inputs. Returns an :class:`argparse.Namespace` object with each flag.
         See :ref:`parsing` for more info.
 
         :param flag_list: List of flags to parse. This can be used for testing. Defaults to :class:`sys.argv[1:]`.
@@ -134,63 +142,9 @@ class FlagParser:
         :return: Returns an object containing the values of all the flags.
         :rtype: Instance of :class:`argparse.Namespace`
         """
+        self._log("Processing flag list")
         flag_list = flag_list or sys.argv[1:]
-        formatter = _HelpFormatter(
-            self._help_messages,
-            self.program_name,
-            description=self.description,
-            epilogue=self.epilogue,
-        )
-        help_string = formatter.format()
-        if "--help" in flag_list or "-h" in flag_list:
-            print(help_string)
-            sys.exit()
-        parsed = _ParsedObj()
-        for key, value in self._added_flags.items():
-            stripped_flag = key.replace("-", "")
-            flipped_bool = not value
-            setattr(parsed, stripped_flag, flipped_bool)
-        for flag in flag_list:
-            if flag in self._added_flags:
-                stripped_flag = flag.replace("-", "")
-                values = self._flag_pairs.values()
-                if flag in values:
-                    key = list(self._flag_pairs.keys())[list(self._flag_pairs.values()).index(flag)]
-                    short_version = key.replace("-", "")
-                    setattr(parsed, short_version, self._added_flags[flag])
-                setattr(parsed, stripped_flag, self._added_flags[flag])
-            else:
-                raise ValueError(f"Unrecognized flag: {flag}")
-
-        return parsed
-
-
-class _ParsedObj:
-    help = "--help"
-
-
-class _HelpFormatter:
-    def __init__(
-        self,
-        help_messages: List[str],
-        program_name: str,
-        description: str = None,
-        epilogue: str = None,
-    ):
-        description = description or ""
-        epilogue = epilogue or ""
-        self.description = description
-        self.epilogue = epilogue
-        self.program_name = program_name
-        self.help_messages = help_messages
-
-    def format(self) -> str:
-        formatted_string_opening = (
-            f"{self.description}\nUsage: {self.program_name} [flags]\n\n"
-        )
-        formatted_string_body = "\n".join(self.help_messages)
-        formatted_string_closing = f"\n\n{self.epilogue}"
-        formatted_string_final = f"{formatted_string_opening}{formatted_string_body}{formatted_string_closing}"
-        return formatted_string_final
-
-
+        self._log("Parsing flags")
+        args = self.parse_args(flag_list)
+        self._log("Cleaning up")
+        return args
