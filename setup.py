@@ -33,7 +33,7 @@ extras_require = {"docs": ["sphinx", "sphinx-rtd-theme"]}
 setup(
     name="ezflags",
     version=ezflags.__version__,
-    packages=["ezflags"],
+    packages=["ezflags", "ezflags.ext"],
     url="https://github.com/karx1/ezflags",
     project_urls={"Documentation": "https://ezflags.readthedocs.io/en/latest"},
     license="MIT",
