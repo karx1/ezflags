@@ -5,6 +5,7 @@ import sys
 from typing import List
 import time
 import datetime
+from .exceptions import NotEnoughValuesError, UnrecognizedFlagError
 
 
 # MIT License
@@ -110,7 +111,7 @@ class FlagParser:
         """
         self._log("Computing values")
         if len(args) < 0:
-            raise ValueError("Must provide at least one flag")
+            raise NotEnoughValuesError("Must provide at least one flag to add")
         args = args[:2]
         string_one = args[0]
         try:
@@ -175,7 +176,7 @@ class FlagParser:
                     setattr(parsed, short_version, self._added_flags[flag])
                 setattr(parsed, stripped_flag, self._added_flags[flag])
             else:
-                raise ValueError(f"Unrecognized flag: {flag}")
+                raise UnrecognizedFlagError(f"Unrecognized flag: {flag}")
 
         self._log("Done, cleaning up")
         return parsed
