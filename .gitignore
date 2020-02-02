@@ -12,3 +12,4 @@ ezflags/ext/__pycache__/
 .eggs/
 .coverage
 flag.py
+log.txt
