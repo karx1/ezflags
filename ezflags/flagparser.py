@@ -191,10 +191,12 @@ class _ParsedObj:
     def __str__(self):
         x = []
         for key, value in vars(self).items():
-            string = f"{key}: {value}"
+            string = f"{key}={value}"
             x.append(string)
 
-        return "\n".join(x)
+        s = ", ".join(x)
+        ss = f"ezflags.ParsedObj({s})"
+        return ss
 
 
 class _HelpFormatter:
