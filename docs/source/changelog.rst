@@ -3,6 +3,13 @@ Changelog
 
 This is a detailed rendering of what changed in each version.
 
+.. _vp1p4p2:
+
+v1.4.2
+------
+ - Create custom exceptions. This makes it easier to include ezflags in error handlers.
+ - Add str() and repr() functionality to _ParsedObj. This makes it easier to see what flags are present and their values.
+
 .. _vp1p4p1:
 
 v1.4.1
