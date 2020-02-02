@@ -185,6 +185,17 @@ class FlagParser:
 class _ParsedObj:
     help = "--help"
 
+    def __repr__(self):
+        return f"_ParsedObj({vars(self)})"
+
+    def __str__(self):
+        x = []
+        for key, value in vars(self).items():
+            string = f"{key}: {value}"
+            x.append(string)
+
+        return "\n".join(x)
+
 
 class _HelpFormatter:
     def __init__(
