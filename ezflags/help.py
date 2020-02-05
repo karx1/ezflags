@@ -27,6 +27,7 @@ import textwrap
 
 
 class HelpFormatter:
+    """This is the formatter for the parser's help messages. When subclassing, override `format`."""
     def __init__(
         self,
         help_messages: List[str],

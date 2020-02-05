@@ -24,6 +24,13 @@
 
 
 class ParsedObj:
+    """This is the object returned when calling `parse_flags()`. It technically contains nothing except str() and repr() methods, and attributes corresponding to each flag.\n
+    Its attributes can be accessed like so:\n
+    .. code:: py
+
+        flags = parser.parse_flags()
+        print(flags.flag) # prints True
+    """
     help = "--help"
 
     def __repr__(self):
