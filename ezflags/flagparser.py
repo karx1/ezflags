@@ -5,7 +5,10 @@ import sys
 from typing import List
 import time
 import datetime
+
 from .exceptions import NotEnoughValuesError, UnrecognizedFlagError
+from .help import HelpFormatter
+from .parsed import ParsedObj
 
 
 # MIT License
@@ -149,7 +152,7 @@ class FlagParser:
         """
         flag_list = flag_list or sys.argv[1:]
         self._log("Formatting help string")
-        formatter = _HelpFormatter(
+        formatter = HelpFormatter(
             self._help_messages,
             self.program_name,
             description=self.description,
@@ -160,7 +163,7 @@ class FlagParser:
         if "--help" in flag_list or "-h" in flag_list:
             print(help_string)
             sys.exit()
-        parsed = _ParsedObj()
+        parsed = ParsedObj()
         self._log("Adding values to _ParsedObj instance")
         for key, value in self._added_flags.items():
             stripped_flag = key.replace("-", "")
@@ -182,43 +185,4 @@ class FlagParser:
         return parsed
 
 
-class _ParsedObj:
-    help = "--help"
 
-    def __repr__(self):
-        return f"_ParsedObj({vars(self)})"
-
-    def __str__(self):
-        x = []
-        for key, value in vars(self).items():
-            string = f"{key}={value}"
-            x.append(string)
-
-        s = ", ".join(x)
-        ss = f"ezflags.ParsedObj({s})"
-        return ss
-
-
-class _HelpFormatter:
-    def __init__(
-        self,
-        help_messages: List[str],
-        program_name: str,
-        description: str = None,
-        epilogue: str = None,
-    ):
-        description = description or ""
-        epilogue = epilogue or ""
-        self.description = description
-        self.epilogue = epilogue
-        self.program_name = program_name
-        self.help_messages = help_messages
-
-    def format(self) -> str:
-        formatted_string_opening = (
-            f"{self.description}\nUsage: {self.program_name} [flags]\n\n"
-        )
-        formatted_string_body = "\n".join(self.help_messages)
-        formatted_string_closing = f"\n\n{self.epilogue}"
-        formatted_string_final = f"{formatted_string_opening}{formatted_string_body}{formatted_string_closing}"
-        return formatted_string_final
